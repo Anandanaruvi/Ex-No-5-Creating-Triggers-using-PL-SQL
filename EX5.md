@@ -13,12 +13,65 @@
 8. Display the employee table, salary_log table.
 
 ### Program:
+```
+CREATE TABLE employe(
+  empid NUMBER,
+  empname VARCHAR2(10),
+  dept VARCHAR2(10),
+  salary NUMBER
+);
+
+CREATE TABLE salary_log (
+  log_id NUMBER GENERATED ALWAYS AS IDENTITY,
+  empid NUMBER,
+  empname VARCHAR2(10),
+  old_salary NUMBER,
+  new_salary NUMBER,
+  update_date DATE
+);
+-- Insert the values in the employee table
+insert into employe values(1,'Kar','IT',1000000);
+insert into employe values(2,'Boha','SALES',500000)
+```
+
 ### Create employee table
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/9f1b57bf-a032-4d74-9a74-e346c3d389ed)
 
 ### Create salary_log table
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/56c3cee2-1efb-4aa8-99f1-8e02ba163eae)
 
 ### PLSQL Trigger code
+```
+-- Create the trigger
+CREATE OR REPLACE TRIGGER log_sal_update
+BEFORE UPDATE ON employe
+FOR EACH ROW
+BEGIN
+  IF :OLD.salary != :NEW.salary THEN
+    INSERT INTO sal_log (empid, empname, old_salary, new_salary, update_date)
+    VALUES (:OLD.empid, :OLD.empname, :OLD.salary, :NEW.salary, SYSDATE);
+  END IF;
+END;
+/
+-- Insert the values in the employee table
+insert into employe values(1,'Shakthi','IT',1000000);
+insert into employe values(2,'Suju','SALES',500000);
 
+-- Update the salary of an employee
+UPDATE employe
+SET salary = 60000
+WHERE empid = 1;
+-- Display the employee table
+SELECT * FROM employe;
+
+-- Display the salary_log table
+SELECT * FROM sal_log;
+```
 ### Output:
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/9a431bb5-975a-4cbf-bd9f-84aa10cc1a91)
 
 ### Result:
+
+Thus the program implemented successfully.
+
+
