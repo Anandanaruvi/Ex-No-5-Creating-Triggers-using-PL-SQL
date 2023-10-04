@@ -13,62 +13,99 @@
 8. Display the employee table, salary_log table.
 
 ### Program:
-```
-CREATE TABLE employe(
-  empid NUMBER,
-  empname VARCHAR2(10),
-  dept VARCHAR2(10),
-  salary NUMBER
-);
-
-CREATE TABLE salary_log (
-  log_id NUMBER GENERATED ALWAYS AS IDENTITY,
-  empid NUMBER,
-  empname VARCHAR2(10),
-  old_salary NUMBER,
-  new_salary NUMBER,
-  update_date DATE
-);
--- Insert the values in the employee table
-insert into employe values(1,'Kar','IT',1000000);
-insert into employe values(2,'Boha','SALES',500000)
-```
 
 ### Create employee table
-![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/9f1b57bf-a032-4d74-9a74-e346c3d389ed)
+### QUERY:
+```
+ CREATE TABLE el
+  2  (
+  3  empid NUMBER,
+  4  empname VARCHAR2(10),
+  5  dept VARCHAR2(10),
+  6  salary NUMBER
+  7  );
+```
+### OUTPUT:
+
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/47af7a89-5817-4795-8004-5a3f7abe6867)
 
 ### Create salary_log table
-![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/56c3cee2-1efb-4aa8-99f1-8e02ba163eae)
+### QUERY:
+```
+ CREATE TABLE wages_log
+  2  (
+  3  log_id NUMBER GENERATED ALWAYS AS IDENTITY,
+  4  empid NUMBER,
+  5  empname VARCHAR2(10),
+  6  old_salary NUMBER,
+  7  new_salary NUMBER,
+  8  update_date DATE
+  9  );
+```
+### OUTPUT:
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/e7a85f6f-93ae-4559-82a5-4e8755f2f4d1)
 
 ### PLSQL Trigger code
+### QUERY:
 ```
--- Create the trigger
-CREATE OR REPLACE TRIGGER log_sal_update
-BEFORE UPDATE ON employe
-FOR EACH ROW
-BEGIN
-  IF :OLD.salary != :NEW.salary THEN
-    INSERT INTO sal_log (empid, empname, old_salary, new_salary, update_date)
-    VALUES (:OLD.empid, :OLD.empname, :OLD.salary, :NEW.salary, SYSDATE);
-  END IF;
-END;
-/
--- Insert the values in the employee table
-insert into employe values(1,'Shakthi','IT',1000000);
-insert into employe values(2,'Suju','SALES',500000);
-
--- Update the salary of an employee
-UPDATE employe
-SET salary = 60000
-WHERE empid = 1;
--- Display the employee table
-SELECT * FROM employe;
-
--- Display the salary_log table
-SELECT * FROM sal_log;
+ CREATE OR REPLACE TRIGGER logging_sal_update
+  2  BEFORE UPDATE ON el
+  3  FOR EACH ROW
+  4  BEGIN
+  5  IF :OLD.salary != :NEW.salary THEN
+  6  INSERT INTO wages_log (empid, empname, old_salary, new_salary, update_date)
+  7  VALUES (:OLD.empid, :OLD.empname, :OLD.salary, :NEW.salary, SYSDATE);
+  8  END IF;
+  9  END;
+ 10  /
 ```
 ### Output:
-![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/9a431bb5-975a-4cbf-bd9f-84aa10cc1a91)
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/2c4e1a99-6211-4b10-9616-2664f961dcc4)
+
+### Inserting data into the employed table:
+### QUERY:
+```
+insert into el values(1,'Anandan','AIDS',20000);
+
+SQL> insert into el values(1,'Anandan','AIDS',20000);
+
+SQL> insert into el values(2,'Mullai','AIDS',30000);
+
+SQL> insert into el values(3,'Aadhavan','AIDS',40000);
+
+SQL> insert into el values(4,'Aruvi','AIDS',50000);
+```
+### OUTPUT:
+
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/1764f153-aef6-4520-95f5-b1b732083ed3)
+
+### Update the salary of an employed:
+### QUERY:
+```
+SQL> UPDATE e1
+  2  SET salary = 120000
+  3  where empid=3;
+```
+
+### OUTPUT:
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/90d88553-3fde-40c3-bc25-15d95d4ab0fe)
+
+### Display the employee table:
+### QUERY:
+```
+select * from el
+```
+### OUTPUT:
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/757b5193-3c3c-4d85-ba22-66f6cdcc0fe6)
+
+### Display the salary_log table:
+### QUERY:
+```
+select * from wages_log;
+```
+
+### OUTPUT:
+![image](https://github.com/Anandanaruvi/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/120443233/8b5c3bb4-7a71-4432-b74f-0d91a8a448d0)
 
 ### Result:
 
